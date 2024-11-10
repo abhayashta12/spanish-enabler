@@ -9,9 +9,8 @@ import Courses from './components/Courses';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import BeginnerCourse from './components/courses/BeginnerCourse';
-import IntermediateCourse from './components/courses/IntermediateCourse';
-import AdvancedCourse from './components/courses/AdvancedCourse';
+import OneonOneCourse from './components/courses/OneonOneCourse';
+import GroupCourse from './components/courses/GroupCourse';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -41,9 +40,8 @@ function App() {
           }
         />
         {/* Course Detail Routes */}
-        <Route path="/courses/beginner" element={<BeginnerCourse />} />
-        <Route path="/courses/intermediate" element={<IntermediateCourse />} />
-        <Route path="/courses/advanced" element={<AdvancedCourse />} />
+        <Route path="/courses/OneonOne" element={<OneonOneCourse />} />
+        <Route path="/courses/Group" element={<GroupCourse />} />
       </Routes>
     </Router>
   );

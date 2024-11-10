@@ -5,29 +5,24 @@ import { Link } from 'react-router-dom';
 
 const courses = [
   {
-    title: 'Beginner Spanish',
+    title: 'One on One Session',
     description: 'Start your journey with the basics.',
-    image: '/images/beginner.jpg',
-    link: '/courses/beginner',
+    image: '/images/oneonone.jpg',
+    link: '/courses/OneonOne',
   }, 
+  
   {
-    title: 'Intermediate Spanish',
-    description: 'Build upon your existing knowledge.',
-    image: '/images/intermediate.jpg',
-    link: '/courses/intermediate',
-  },
-  {
-    title: 'Advanced Spanish',
+    title: 'Group Session',
     description: 'Master the language like a native speaker.',
-    image: '/images/advanced.jpg',
-    link: '/courses/advanced',
+    image: '/images/group.jpg',
+    link: '/courses/Group',
   },
 ];
 
 const Courses = () => (
   <section id="courses" className="py-12 bg-gray-100">
     <div className="container mx-auto">
-      <h2 className="text-4xl font-bold text-center mb-6">Courses Offered</h2>
+      <h2 className="text-4xl font-bold text-center mb-6">Learn with us</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {courses.map((course, index) => (
           <div

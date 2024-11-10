@@ -11,7 +11,7 @@ const About = () => (
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 2 }}
         >
-          Who Am I and Why I Built This.
+          Who We Are and Why We Built This.
         </motion.h2>
         <motion.div 
           className="flex justify-center mb-6"
