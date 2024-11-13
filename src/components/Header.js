@@ -1,7 +1,7 @@
 // src/components/Header.js
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link } from 'react-router-dom'; 
 import logo from '../assets/spanish.png';
 
 const Header = () => {
@@ -30,11 +30,11 @@ const Header = () => {
         </div>
         {/* Navigation Links */}
         <ul className={`md:flex space-x-4 ${menuOpen ? 'block' : 'hidden'} md:block`}>
-          <li><a href="#about" className="hover:text-yellow-300">About</a></li>
-          <li><a href="#courses" className="hover:text-yellow-300">Courses</a></li>
-          <li><a href="#testimonials" className="hover:text-yellow-300">Testimonials</a></li>
-          <li><a href="#contact" className="hover:text-yellow-300">Contact</a></li>
-        </ul>
+  <li><a href="#about" className="hover:text-black hover:font-bold hover:bg-yellow-100 transition duration-300 ease-in-out">About</a></li>
+  <li><a href="#courses" className="hover:text-black hover:font-bold hover:bg-yellow-100 transition duration-300 ease-in-out">Courses</a></li>
+  <li><a href="#testimonials" className="hover:text-black hover:font-bold hover:bg-yellow-100 transition duration-300 ease-in-out">Testimonials</a></li>
+  <li><a href="#contact" className="hover:text-black hover:font-bold hover:bg-yellow-100 transition duration-300 ease-in-out">Contact</a></li>
+</ul>
         {/* Mobile Menu Button */}
         <button
           className="md:hidden text-white focus:outline-none"

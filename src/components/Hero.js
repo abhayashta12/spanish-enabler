@@ -31,6 +31,11 @@ const Hero = () => {
     setPopupDismissed(true);
   };
 
+  const handleSubscribe = () => {
+    setShowPopup(false);
+    setPopupDismissed(true);
+  };
+
   return (
     <>
       {/* Popup for Newsletter Subscription */}
@@ -57,7 +62,10 @@ const Hero = () => {
               placeholder="Enter your email"
               className="w-full p-4 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
-            <button className="w-full bg-gradient-to-r from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300">
+            <button
+              onClick={handleSubscribe}
+              className="w-full bg-gradient-to-r from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300"
+            >
               Subscribe Now
             </button>
           </div>
