@@ -13,6 +13,8 @@ import OneonOneCourse from './components/courses/OneonOneCourse';
 import GroupCourse from './components/courses/GroupCourse';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import Stats from './components/Stats';
+import Resources from './components/Resources'
 
 function App() {
   useEffect(() => {
@@ -31,6 +33,8 @@ function App() {
           element={
             <>
               <Hero />
+              <Stats />
+              <Resources/>
               <About />
               <Courses />
               <Testimonials />
