@@ -1,18 +1,21 @@
-// backend/server.js
+require('dotenv').config(); // Make sure this is the first line
 
 const express = require('express');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // Use your secret key from the environment variable
 const cors = require('cors');
-require('dotenv').config();
 
 const app = express();
+const PORT = process.env.PORT || 4242;
 
-// Middleware to parse JSON requests
 app.use(express.json());
 app.use(cors());
 
 app.post('/create-checkout-session', async (req, res) => {
   const { price } = req.body;
+
+  if (!price) {
+    return res.status(400).json({ error: 'Price is required' });
+  }
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -24,7 +27,7 @@ app.post('/create-checkout-session', async (req, res) => {
             product_data: {
               name: 'Spanish Course Enrollment',
             },
-            unit_amount: price,
+            unit_amount: price * 100, // Stripe expects the amount in cents
           },
           quantity: 1,
         },
@@ -36,9 +39,9 @@ app.post('/create-checkout-session', async (req, res) => {
 
     res.json({ id: session.id });
   } catch (error) {
-    console.error('Error creating checkout session:', error);
-    res.status(500).send('Internal Server Error');
+    console.error('Error creating checkout session:', error.message);
+    res.status(500).send({ error: 'Internal Server Error' });
   }
 });
 
-app.listen(4242, () => console.log('Server running on port 4242'));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

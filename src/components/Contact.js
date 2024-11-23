@@ -56,7 +56,7 @@ const Contact = () => {
   return (
     <motion.section
       id="contact"
-      className="py-20 bg-black text-white"
+      className="py-20 bg-gradient-to-b from-gray-50 to-gray-100"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.5 }}
@@ -73,7 +73,7 @@ const Contact = () => {
 
         {successMessage && (
           <motion.div
-            className="bg-green-900 text-green-200 p-4 mb-6 rounded shadow-lg"
+            className="bg-green-100 text-green-700 p-4 mb-6 rounded shadow-lg"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.8 }}
@@ -83,7 +83,7 @@ const Contact = () => {
         )}
         {errorMessage && (
           <motion.div
-            className="bg-red-900 text-red-200 p-4 mb-6 rounded shadow-lg"
+            className="bg-red-100 text-red-700 p-4 mb-6 rounded shadow-lg"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.8 }}
@@ -93,7 +93,7 @@ const Contact = () => {
         )}
 
         <motion.form
-          className="max-w-2xl mx-auto bg-gray-800 p-10 rounded-lg shadow-xl"
+          className="max-w-2xl mx-auto bg-white p-10 rounded-lg shadow-xl"
           onSubmit={handleSubmit}
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -102,7 +102,7 @@ const Contact = () => {
           {/* Name Field */}
           <div className="relative mb-8">
             <input
-              className="w-full p-4 border-b-4 border-gray-600 focus:border-red-600 outline-none transition duration-300 rounded-md bg-gray-900 text-white placeholder-gray-400"
+              className="w-full p-4 border-b-4 border-gray-300 focus:border-red-600 outline-none transition duration-300 rounded-md"
               type="text"
               name="name"
               value={formData.name}
@@ -112,8 +112,8 @@ const Contact = () => {
               required
             />
             <label
-              className={`absolute left-0 top-0 px-4 py-4 text-gray-400 pointer-events-none transition-all duration-300 ${
-                focused.name || formData.name ? 'text-xs transform -translate-y-3 text-red-400' : 'text-base'
+              className={`absolute left-0 top-0 px-4 py-4 text-gray-600 pointer-events-none transition-all duration-300 ${
+                focused.name || formData.name ? 'text-xs transform -translate-y-3 text-red-600' : 'text-base'
               }`}
             >
               Your Name
@@ -123,7 +123,7 @@ const Contact = () => {
           {/* Email Field */}
           <div className="relative mb-8">
             <input
-              className="w-full p-4 border-b-4 border-gray-600 focus:border-red-600 outline-none transition duration-300 rounded-md bg-gray-900 text-white placeholder-gray-400"
+              className="w-full p-4 border-b-4 border-gray-300 focus:border-red-600 outline-none transition duration-300 rounded-md"
               type="email"
               name="email"
               value={formData.email}
@@ -133,8 +133,8 @@ const Contact = () => {
               required
             />
             <label
-              className={`absolute left-0 top-0 px-4 py-4 text-gray-400 pointer-events-none transition-all duration-300 ${
-                focused.email || formData.email ? 'text-xs transform -translate-y-3 text-red-400' : 'text-base'
+              className={`absolute left-0 top-0 px-4 py-4 text-gray-600 pointer-events-none transition-all duration-300 ${
+                focused.email || formData.email ? 'text-xs transform -translate-y-3 text-red-600' : 'text-base'
               }`}
             >
               Your Email
@@ -144,7 +144,7 @@ const Contact = () => {
           {/* Message Field */}
           <div className="relative mb-8">
             <textarea
-              className="w-full p-4 border-b-4 border-gray-600 focus:border-red-600 outline-none transition duration-300 resize-none rounded-md bg-gray-900 text-white placeholder-gray-400"
+              className="w-full p-4 border-b-4 border-gray-300 focus:border-red-600 outline-none transition duration-300 resize-none rounded-md"
               name="message"
               rows="5"
               value={formData.message}
@@ -154,8 +154,8 @@ const Contact = () => {
               required
             ></textarea>
             <label
-              className={`absolute left-0 top-0 px-4 py-4 text-gray-400 pointer-events-none transition-all duration-300 ${
-                focused.message || formData.message ? 'text-xs transform -translate-y-3 text-red-400' : 'text-base'
+              className={`absolute left-0 top-0 px-4 py-4 text-gray-600 pointer-events-none transition-all duration-300 ${
+                focused.message || formData.message ? 'text-xs transform -translate-y-3 text-red-600' : 'text-base'
               }`}
             >
               Your Message
