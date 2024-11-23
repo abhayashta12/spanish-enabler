@@ -3,9 +3,9 @@
 import React from 'react';
 
 const OneonOneCourse = () => (
-  <section className="pt-32 pb-12 bg-gradient-to-b from-yellow-50 to-white">
+  <section className="pt-32 pb-12 bg-gradient-to-b from-black- to-white">
     <div className="container mx-auto text-center">
-      <h2 className="text-5xl font-bold mb-8 text-gray-900">One On One Course</h2>
+      <h2 className="text-5xl font-bold mb-20 text-gray-900">One On One Course</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* Card 1: A1 Level Beginner */}
         <div className="bg-white rounded-lg shadow-xl hover:shadow-2xl transition-transform duration-500 p-8 transform hover:scale-105">

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import david from '../assets/david.png';
-import { Link } from 'react-router-dom';
+
 
 const Hero = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -79,7 +79,7 @@ const Hero = () => {
         style={{
           backgroundColor: "#f5f0e1",
           backgroundImage: `url(${david})`,
-          backgroundBlendMode: 'overlay',
+          // backgroundBlendMode: 'overlay',
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
@@ -90,31 +90,31 @@ const Hero = () => {
             WORLD'S #1 SPANISH LEARNING COACH
           </h1>
           <div className="flex flex-wrap justify-center items-center gap-4">
-            <Link to="/free-ebook">
-              <button className="border-2 border-blue-500 hover:bg-blue-500 text-white font-semibold py-3 px-8 rounded-full m-2 transition-all duration-300">
+            <a href="https://stan.store/TheSpanishEnabler/p/get-my-ebook-now-aybig" target="_blank" rel="noopener noreferrer">
+              <button className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-black font-semibold py-4 px-8 rounded-full shadow-md hover:shadow-lg transition-all duration-300 animate-gradient">
                 FREE EBOOK
               </button>
-            </Link>
-            <Link to="/courses/beginner">
-              <button className="border-2 border-blue-500 hover:bg-blue-500 text-white font-semibold py-3 px-8 rounded-full m-2 transition-all duration-300">
-                BEGINNER COURSE
+            </a>
+            <a href="https://stan.store/TheSpanishEnabler/p/get-my-ebook-now-aybig" target="_blank" rel="noopener noreferrer">
+              <button className="border-2 border-blue-500 hover:bg-blue-500 hover:from-blue-500 hover:to-blue-700text-white font-semibold py-3 px-8 rounded-full m-2 transition-all duration-300">
+                ONE ON ONE SESSION  
               </button>
-            </Link>
-            <Link to="/courses/keynote">
+            </a>
+            <a href="https://stan.store/TheSpanishEnabler/p/get-my-ebook-now-aybig" target="_blank" rel="noopener noreferrer">
               <button className="border-2 border-blue-500 hover:bg-blue-500 text-white font-semibold py-3 px-8 rounded-full m-2 transition-all duration-300">
-                KEYNOTE SPEECH COURSE
+                GROUP SESSION
               </button>
-            </Link>
-            <Link to="/courses/speech-coaching">
+            </a>
+            {/* <a href="https://stan.store/TheSpanishEnabler/p/get-my-ebook-now-aybig" target="_blank" rel="noopener noreferrer">
               <button className="border-2 border-blue-500 hover:bg-blue-500 text-white font-semibold py-3 px-8 rounded-full m-2 transition-all duration-300">
                 SPEECH COACHING
               </button>
-            </Link>
-            <Link to="/speaking-engagements">
+            </a>
+            <a href="https://stan.store/TheSpanishEnabler/p/get-my-ebook-now-aybig" target="_blank" rel="noopener noreferrer">
               <button className="border-2 border-blue-500 hover:bg-blue-500 text-white font-semibold py-3 px-8 rounded-full m-2 transition-all duration-300">
                 SPEAKING ENGAGEMENTS
               </button>
-            </Link>
+            </a> */}
           </div>
         </div>
       </section>

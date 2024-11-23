@@ -1,39 +1,44 @@
-// server.js
+// backend/server.js
+
 const express = require('express');
-const Stripe = require('stripe');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
-const stripe = Stripe('YOUR_SECRET_KEY'); // Replace with your Stripe Secret Key
 
+// Middleware to parse JSON requests
 app.use(express.json());
 app.use(cors());
 
 app.post('/create-checkout-session', async (req, res) => {
+  const { price } = req.body;
+
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      mode: 'payment',
       line_items: [
         {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: 'Spanish Group Course Enrollment',
+              name: 'Spanish Course Enrollment',
             },
-            unit_amount: 9999, // Amount in cents (e.g., $99.99)
+            unit_amount: price,
           },
           quantity: 1,
         },
       ],
-      success_url: 'http://localhost:3000/success', // Replace with your success page URL
-      cancel_url: 'http://localhost:3000/cancel',   // Replace with your cancel page URL
+      mode: 'payment',
+      success_url: `${process.env.CLIENT_URL}/success`,
+      cancel_url: `${process.env.CLIENT_URL}/cancel`,
     });
 
     res.json({ id: session.id });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error creating checkout session:', error);
+    res.status(500).send('Internal Server Error');
   }
 });
 
-app.listen(4242, () => console.log('Node server running on port 4242'));
+app.listen(4242, () => console.log('Server running on port 4242'));

@@ -25,3 +25,4 @@ yarn-error.log*
 #Environmental variables 
 .env.production
 .env
+/backend/.env
