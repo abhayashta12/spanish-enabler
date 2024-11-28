@@ -101,7 +101,7 @@ const OneonOneCourse = () => {
                 >
                   <h3 className="text-xl font-semibold mb-2 text-[#1a1a1a]">{course}</h3>
                   <p className="text-[#666666] mb-6">Learn the basics of {course}.</p>
-                  <p className="text-2xl font-bold mb-6 text-[#1a1a1a]">${(5000 + index * 1000) / 100}.00</p>
+                  <p className="text-2xl font-bold mb-6 text-[#1a1a1a]">${(100 + index * 1000) / 100}.00</p>
                   <button
                     className="w-full bg-[#1a1a1a] text-white py-2.5 rounded-md hover:bg-black transition-colors"
                     onClick={() => setSelectedCourse(course)}
@@ -149,10 +149,10 @@ const OneonOneCourse = () => {
               </div>
               
               <div className="flex items-center justify-between">
-                <p className="text-2xl font-bold">${(5000) / 100}.00</p>
+                <p className="text-2xl font-bold">${(100) / 100}.00</p>
                 <motion.button
                   className="bg-[#1a1a1a] text-white px-6 py-2.5 rounded-md hover:bg-black transition-colors"
-                  onClick={() => handleCheckout(selectedCourse, 5000)}
+                  onClick={() => handleCheckout(selectedCourse, 100)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
