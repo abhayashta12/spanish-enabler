@@ -3,14 +3,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const OneonOneCourse = () => {
   const [selectedCourse, setSelectedCourse] = useState(null);
- 
 
   useEffect(() => {
+    // Scroll to the top of the page when the component is first mounted
+    window.scrollTo(0, 0);
+    
     if (selectedCourse) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
+
     return () => {
       document.body.style.overflow = 'unset';
     };
