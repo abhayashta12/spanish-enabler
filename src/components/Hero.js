@@ -155,9 +155,11 @@ const Hero = () => {
       >
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <div className="container mx-auto relative text-center text-white z-10">
-          <h1 className="text-6xl font-extrabold mb-8 tracking-wide">
-            WORLD'S #1 SPANISH TEACHING COACH
-          </h1>
+        <h1 className="text-6xl font-extrabold mb-8 tracking-wide leading-tight mt-40">
+        WORLD'S #1 SPANISH <br />
+        &nbsp;TEACHING
+        COACH
+        </h1>
           <div className="flex flex-wrap justify-center items-center gap-4">
             <a
               href="https://stan.store/TheSpanishEnabler/p/get-my-ebook-now-aybig"

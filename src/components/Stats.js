@@ -7,9 +7,9 @@ import axios from 'axios';
 
 const Stats = () => {
   const [stats, setStats] = useState({
-    followers: 300000,
-    impressions: 200000,
-    speakers: 600000000,
+    followers: 600000,
+    impressions: 6000000,
+    speakers: 3000,
   });
 
   useEffect(() => {
@@ -42,14 +42,14 @@ const Stats = () => {
             <h3 className="text-4xl font-bold mb-2 text-gray-800">
               <CountUp end={stats.followers / 1000} duration={2.5} separator="," suffix="k" />
             </h3>
-            <p className="text-lg text-gray-600">TikTok Followers</p>
+            <p className="text-lg text-gray-600">TikTok and Instagram Followers</p>
           </div>
           <div className="flex flex-col items-center transform hover:scale-105 transition-transform duration-500 ease-in-out">
             <div className="text-gray-800 mb-4">
               <FaChartLine size={50} className="animate-bounce" />
             </div>
             <h3 className="text-4xl font-bold mb-2 text-gray-800">
-              <CountUp end={stats.impressions / 1000} duration={2.5} separator="," suffix="k" />
+              <CountUp end={stats.impressions / 1000000} duration={2.5} separator="," suffix="M" />
             </h3>
             <p className="text-lg text-gray-600">Impressions</p>
           </div>
@@ -58,9 +58,9 @@ const Stats = () => {
               <FaLanguage size={50} className="animate-pulse" />
             </div>
             <h3 className="text-4xl font-bold mb-2 text-gray-800">
-              <CountUp end={stats.speakers / 1000000} duration={2.5} separator="," suffix="M" />
+              <CountUp end={stats.speakers / 1000} duration={2.5} separator="," suffix="k" />
             </h3>
-            <p className="text-lg text-gray-600">Spanish Speakers Worldwide</p>
+            <p className="text-lg text-gray-600">Skool Community</p>
           </div>
         </div>
       </div>
