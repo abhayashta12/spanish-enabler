@@ -1,45 +1,12 @@
 import React, { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
+import { motion } from 'framer-motion';
 
 // Load the Stripe publishable key (replace YOUR_STRIPE_PUBLISHABLE_KEY)
-const stripePromise = loadStripe('YOUR_STRIPE_PUBLISHABLE_KEY');
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 const GroupCourse = () => {
-  const [selectedCourse, setSelectedCourse] = useState(null);
   const [expandedFaq, setExpandedFaq] = useState(null);
-
-  const handleEnrollClick = async (course) => {
-    const stripe = await stripePromise;
-
-    try {
-      const response = await fetch('http://localhost:4242/create-checkout-session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          courseName: course.title,
-          price: course.price,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create checkout session');
-      }
-
-      const session = await response.json();
-
-      const result = await stripe.redirectToCheckout({
-        sessionId: session.id,
-      });
-
-      if (result.error) {
-        console.error(result.error.message);
-      }
-    } catch (error) {
-      console.error('Error in checkout process:', error);
-    }
-  };
 
   const courses = [
     {
@@ -82,6 +49,37 @@ const GroupCourse = () => {
     { question: 'What materials are provided with the course?', answer: 'All necessary learning materials, including textbooks and online resources, are included in the course fee.' },
   ];
 
+  const handleEnrollClick = async (course) => {
+    const stripe = await stripePromise;
+
+    try {
+      const response = await fetch('http://localhost:4242/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          courseName: course.title,
+          price: course.price,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create checkout session');
+      }
+
+      const session = await response.json();
+
+      if (session.url) {
+        window.location.href = session.url;
+      } else {
+        console.error('Failed to get session URL');
+      }
+    } catch (error) {
+      console.error('Error in checkout process:', error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#fafafa]">
       <header className="py-40 px-4">
@@ -103,28 +101,48 @@ const GroupCourse = () => {
 
       <main>
         <section id="courses" className="py-20 px-4">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-serif mb-12 text-center text-[#1a1a1a]">
-              Choose Your Level
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {courses.map((course) => (
-                <div
-                  key={course.title}
-                  className="bg-white p-8 rounded-lg border border-gray-100"
-                >
-                  <h3 className="text-xl font-semibold mb-2 text-[#1a1a1a]">{course.title}</h3>
-                  <p className="text-[#666666] mb-6">{course.description}</p>
-                  <p className="text-2xl font-bold mb-6 text-[#1a1a1a]">${(course.price / 100).toFixed(2)}</p>
-                  <button
-                    className="w-full bg-[#1a1a1a] text-white py-2.5 rounded-md hover:bg-black transition-colors"
-                    onClick={() => setSelectedCourse(course)}
+          <div className="max-w-6xl mx-auto mb-12">
+            <motion.div
+              className="bg-white p-8 rounded-lg border border-gray-200 shadow-lg"
+              whileHover={{ scale: 1.05 }}
+            >
+              <h2 className="text-3xl font-bold text-[#1a1a1a] mb-4">Spanish Speaking Accelerator</h2>
+              <p className="text-lg text-[#666666] mb-6">Accelerate your Spanish speaking skills with our intensive accelerator course designed for rapid progress.</p>
+              <p className="text-2xl font-bold text-red-600 mb-2 line-through">$800.00</p>
+              <p className="text-3xl font-bold text-green-600 mb-6">Special Offer: $567.00</p>
+              <button
+                className="w-full bg-[#1a1a1a] text-white py-2.5 rounded-md hover:bg-black transition-colors"
+                onClick={() => handleEnrollClick({ title: 'Spanish Speaking Accelerator', price: 56700 })}
+              >
+                Enroll Now
+              </button>
+            </motion.div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {courses.map((course) => (
+              <motion.div
+                key={course.title}
+                className="bg-gray-300 p-8 rounded-lg border border-gray-200 relative overflow-hidden cursor-not-allowed"
+                whileHover={{ scale: 1.02 }}
+              >
+                <h3 className="text-xl font-semibold mb-2 text-[#1a1a1a]">{course.title}</h3>
+                <p className="text-[#666666] mb-6">{course.description}</p>
+                <p className="text-2xl font-bold mb-6 text-[#1a1a1a]">
+                  ${(course.price / 100).toFixed(2)}
+                </p>
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
+                  <motion.p
+                    className="text-white text-2xl font-bold"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }}
                   >
-                    Learn More
-                  </button>
+                    Coming Soon
+                  </motion.p>
                 </div>
-              ))}
-            </div>
+              </motion.div>
+            ))}
           </div>
         </section>
 
@@ -150,46 +168,6 @@ const GroupCourse = () => {
           </div>
         </section>
       </main>
-
-      {selectedCourse && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
-          onClick={() => setSelectedCourse(null)}
-        >
-          <div
-            className="bg-white p-8 rounded-lg max-w-md w-full relative"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setSelectedCourse(null)}
-              className="absolute right-4 top-4 text-[#1a1a1a] hover:text-gray-700 text-5xl"
-            >
-              ×
-            </button>
-            <h3 className="text-2xl font-semibold mb-2">{selectedCourse.title}</h3>
-            <p className="text-[#666666] mb-6">{selectedCourse.description}</p>
-            
-            <div className="mb-8">
-              <h4 className="font-semibold mb-4">Course Features:</h4>
-              <ul className="list-disc pl-5 space-y-2">
-                {selectedCourse.features.map((feature, index) => (
-                  <li key={index} className="text-[#1a1a1a]">{feature}</li>
-                ))}
-              </ul>
-            </div>
-            
-            <div className="flex items-center justify-between">
-              <p className="text-2xl font-bold">${(selectedCourse.price / 100).toFixed(2)}</p>
-              <button
-                className="bg-[#1a1a1a] text-white px-6 py-2.5 rounded-md hover:bg-black transition-colors"
-                onClick={() => handleEnrollClick(selectedCourse)}
-              >
-                Enroll Now
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

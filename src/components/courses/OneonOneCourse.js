@@ -5,9 +5,7 @@ const OneonOneCourse = () => {
   const [selectedCourse, setSelectedCourse] = useState(null);
 
   useEffect(() => {
-    // Scroll to the top of the page when the component is first mounted
-    window.scrollTo(0, 0);
-    
+    // Ensure body overflow is controlled depending on modal status
     if (selectedCourse) {
       document.body.style.overflow = 'hidden';
     } else {
