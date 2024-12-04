@@ -34,7 +34,7 @@ app.post('/create-checkout-session', async (req, res) => {
     if (originPage === 'Group') {
       cancelUrl = `${process.env.CLIENT_URL}/courses/Group`;
     } else if (originPage === 'oneonone') {
-      cancelUrl = `${process.env.CLIENT_URL}/courses/OneonOne`;
+      cancelUrl = `${process.env.CLIENT_URL}/OneonOne`;
     } else {
       cancelUrl = `${process.env.CLIENT_URL}#courses`; // fallback to general courses page
     }

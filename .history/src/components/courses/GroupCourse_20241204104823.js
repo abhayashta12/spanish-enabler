@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
 import { motion } from 'framer-motion';
+
+// Load the Stripe publishable key from environment variables
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 const GroupCourse = () => {
   const [expandedFaq, setExpandedFaq] = useState(null);
@@ -45,36 +49,37 @@ const GroupCourse = () => {
     { question: 'What materials are provided with the course?', answer: 'All necessary learning materials, including textbooks and online resources, are included in the course fee.' },
   ];
 
-  const handleCheckout = async (courseName, price) => {
+  const handleEnrollClick = async (course) => {
+    const stripe = await stripePromise;
+
     try {
-      // Sending a request to the backend server to create a Stripe checkout session
-      const response = await fetch('http://localhost:4242/create-checkout-session', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/create-checkout-session`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          // Sending specific course data depending on which course button is clicked
-          courseName: courseName,
-          price: price, // Price in cents
-          originPage: 'Group', // Specify that this request is coming from the OneOnOneCourse page
+          courseName: course.title,
+          price: course.price,
         }),
       });
-  
+
+      if (!response.ok) {
+        throw new Error('Failed to create checkout session');
+      }
+
       const session = await response.json();
-  
-      // Check if the session response has the URL
+
       if (session.url) {
-        // Redirect to Stripe Checkout
         window.location.href = session.url;
       } else {
-        console.error('Checkout session creation failed:', session);
+        console.error('Failed to get session URL');
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error in checkout process:', error);
     }
   };
-  
+
   return (
     <div className="min-h-screen bg-[#fafafa]">
       <header className="py-40 px-4">
@@ -107,7 +112,7 @@ const GroupCourse = () => {
               <p className="text-3xl font-bold text-green-600 mb-6">Special Offer: $567.00</p>
               <button
                 className="w-full bg-[#1a1a1a] text-white py-2.5 rounded-md hover:bg-black transition-colors"
-                onClick={() => handleCheckout('Spanish Speaking Accelerator', 56700)}
+                onClick={() => handleEnrollClick({ title: 'Spanish Speaking Accelerator', price: 56700 })}
               >
                 Enroll Now
               </button>

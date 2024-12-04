@@ -57,7 +57,7 @@ const GroupCourse = () => {
           // Sending specific course data depending on which course button is clicked
           courseName: courseName,
           price: price, // Price in cents
-          originPage: 'Group', // Specify that this request is coming from the OneOnOneCourse page
+          originPage: 'GroupCourse.js', // Specify that this request is coming from the OneOnOneCourse page
         }),
       });
   

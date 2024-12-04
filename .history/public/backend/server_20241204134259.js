@@ -11,6 +11,10 @@ app.use(cors({
   origin: process.env.CLIENT_URL,
 }));
 
+// // Root GET endpoint (this prevents the "Cannot GET /" error)
+// app.get('/', (req, res) => {
+//   res.send('Welcome to the payment backend server.');
+// });
 
 // Endpoint for retrieving checkout session details
 app.get('/retrieve-checkout-session/:sessionId', async (req, res) => {
@@ -27,18 +31,6 @@ app.get('/retrieve-checkout-session/:sessionId', async (req, res) => {
 // POST endpoint for creating checkout session
 app.post('/create-checkout-session', async (req, res) => {
   try {
-    const { courseName, price, originPage } = req.body;
-
-    // Determine the appropriate cancel URL based on the origin page
-    let cancelUrl;
-    if (originPage === 'Group') {
-      cancelUrl = `${process.env.CLIENT_URL}/courses/Group`;
-    } else if (originPage === 'oneonone') {
-      cancelUrl = `${process.env.CLIENT_URL}/courses/OneonOne`;
-    } else {
-      cancelUrl = `${process.env.CLIENT_URL}#courses`; // fallback to general courses page
-    }
-
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
@@ -47,17 +39,17 @@ app.post('/create-checkout-session', async (req, res) => {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: courseName,
+              name: req.body.courseName,
             },
-            unit_amount: price, // price in cents
+            unit_amount: req.body.price, // price in cents, e.g., 5000 for $50.00
           },
           quantity: 1,
         },
       ],
       success_url: `${process.env.CLIENT_URL}/success?session_id={CHECKOUT_SESSION_ID}`, // Send the session ID to success page
-      cancel_url: cancelUrl, // Redirect back to the appropriate course page
+      cancel_url: cancelUrl,
       metadata: {
-        courseName: courseName, // Store course name in metadata
+        courseName: req.body.courseName, // Store course name in metadata
       },
     });
 

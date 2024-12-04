@@ -17,7 +17,6 @@ const OneonOneCourse = () => {
     };
   }, [selectedCourse]);
 
-  
   const handleCheckout = async (courseName, price) => {
     try {
       // Sending a request to the backend server to create a Stripe checkout session

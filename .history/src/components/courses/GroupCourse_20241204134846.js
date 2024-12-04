@@ -57,7 +57,7 @@ const GroupCourse = () => {
           // Sending specific course data depending on which course button is clicked
           courseName: courseName,
           price: price, // Price in cents
-          originPage: 'Group', // Specify that this request is coming from the OneOnOneCourse page
+          originPage: 'oneonone', // Specify that this request is coming from the OneOnOneCourse page
         }),
       });
   
@@ -75,6 +75,7 @@ const GroupCourse = () => {
     }
   };
   
+
   return (
     <div className="min-h-screen bg-[#fafafa]">
       <header className="py-40 px-4">

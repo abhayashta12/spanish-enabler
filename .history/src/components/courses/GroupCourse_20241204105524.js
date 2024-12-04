@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
 import { motion } from 'framer-motion';
+
+// Load the Stripe publishable key (replace YOUR_STRIPE_PUBLISHABLE_KEY)
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 const GroupCourse = () => {
   const [expandedFaq, setExpandedFaq] = useState(null);
@@ -57,12 +61,11 @@ const GroupCourse = () => {
           // Sending specific course data depending on which course button is clicked
           courseName: courseName,
           price: price, // Price in cents
-          originPage: 'Group', // Specify that this request is coming from the OneOnOneCourse page
         }),
       });
-  
+
       const session = await response.json();
-  
+
       // Check if the session response has the URL
       if (session.url) {
         // Redirect to Stripe Checkout
@@ -74,7 +77,7 @@ const GroupCourse = () => {
       console.error('Error:', error);
     }
   };
-  
+
   return (
     <div className="min-h-screen bg-[#fafafa]">
       <header className="py-40 px-4">

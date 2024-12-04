@@ -17,7 +17,6 @@ const OneonOneCourse = () => {
     };
   }, [selectedCourse]);
 
-  
   const handleCheckout = async (courseName, price) => {
     try {
       // Sending a request to the backend server to create a Stripe checkout session
@@ -30,12 +29,11 @@ const OneonOneCourse = () => {
           // Sending specific course data depending on which course button is clicked
           courseName: courseName,
           price: price, // Price in cents
-          originPage: 'oneonone', // Specify that this request is coming from the OneOnOneCourse page
         }),
       });
-  
+
       const session = await response.json();
-  
+
       // Check if the session response has the URL
       if (session.url) {
         // Redirect to Stripe Checkout
@@ -47,7 +45,6 @@ const OneonOneCourse = () => {
       console.error('Error:', error);
     }
   };
-  
 
   return (
     <div className="min-h-screen bg-[#fafafa]">
