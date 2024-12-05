@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import Confetti from 'react-confetti';
 
 const GroupCourse = () => {
   const [expandedFaq, setExpandedFaq] = useState(null);
   const [couponCode, setCouponCode] = useState('');
   const [discountApplied, setDiscountApplied] = useState(false);
   const [discountedPrice, setDiscountedPrice] = useState(80000); // in cents ($800.00)
+  const [showConfetti, setShowConfetti] = useState(true);
+
+  useEffect(() => {
+    // Show confetti for 5 seconds when page loads
+    const timer = setTimeout(() => {
+      setShowConfetti(false);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const courses = [
     {
@@ -90,7 +100,23 @@ const GroupCourse = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen bg-[#fafafa] relative pb-16">
+      {/* Black Friday Floating Banner */}
+      <div className="fixed top-0 w-full bg-black text-white text-center py-3 z-50 shadow-md" style={{ top: '80px' }}>
+        🎉 Black Friday Special Offer - Limited Time Only! 🎉
+      </div>
+
+      {/* Confetti for Black Friday Offer */}
+      {showConfetti && (
+        <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          numberOfPieces={400}
+          recycle={false}
+          run={true}
+        />
+      )}
+
       <header className="py-40 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl font-serif mb-4 text-[#1a1a1a]">
@@ -112,7 +138,7 @@ const GroupCourse = () => {
         <section id="courses" className="py-20 px-4">
           <div className="max-w-6xl mx-auto mb-12">
             <motion.div
-              className="bg-white p-8 rounded-lg border border-gray-200 shadow-lg"
+              className="bg-white p-8 rounded-lg border border-gray-200 shadow-lg relative"
               whileHover={{ scale: 1.05 }}
             >
               <h2 className="text-3xl font-bold text-[#1a1a1a] mb-4">Spanish Speaking Accelerator</h2>
