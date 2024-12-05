@@ -3,6 +3,55 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const OneonOneCourse = () => {
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [customPrice, setCustomPrice] = useState(0);
+
+  // Define courses as an array of objects
+  const courses = [
+    {
+      id: 1,
+      title: 'A1 Level Beginner',
+      description: 'Learn the basics of A1 Level Beginner.',
+      price: 216000, 
+    },
+    {
+      id: 2,
+      title: 'A2 Level Beginner',
+      description: 'Learn the basics of A2 Level Beginner.',
+      price: 270000, 
+    },
+    {
+      id: 3,
+      title: 'B1 Level Intermediate',
+      description: 'Learn the basics of B1 Level Intermediate.',
+      price: 324000,
+    },
+    {
+      id: 4,
+      title: 'B2 Level Intermediate',
+      description: 'Learn the basics of B2 Level Intermediate.',
+      price: 405000, 
+    },
+    {
+      id: 5,
+      title: 'Custom Advanced',
+      description: 'Learn the basics of Custom Advanced.',
+      priceOptions: [
+        {
+          label: 'On Demand - 1 Unit (2 Hours)',
+          price: 9000, // $90.00 in cents
+        },
+        {
+          label: 'Explorer - 5 Units (10 Hours)',
+          price: 40500, // $405.00 in cents
+        },
+        {
+          label: 'Adventurer - 10 Units (20 Hours)',
+          price: 76500, // $765.00 in cents
+        },
+      ],
+    },
+  ];
 
   useEffect(() => {
     // Ensure body overflow is controlled depending on modal status
@@ -17,8 +66,12 @@ const OneonOneCourse = () => {
     };
   }, [selectedCourse]);
 
-  
   const handleCheckout = async (courseName, price) => {
+    if (!courseName || price === 0) {
+      console.error("Missing course name or price.");
+      return;
+    }
+
     try {
       // Sending a request to the backend server to create a Stripe checkout session
       const response = await fetch('http://localhost:4242/create-checkout-session', {
@@ -33,9 +86,9 @@ const OneonOneCourse = () => {
           originPage: 'oneonone', // Specify that this request is coming from the OneOnOneCourse page
         }),
       });
-  
+
       const session = await response.json();
-  
+
       // Check if the session response has the URL
       if (session.url) {
         // Redirect to Stripe Checkout
@@ -47,13 +100,12 @@ const OneonOneCourse = () => {
       console.error('Error:', error);
     }
   };
-  
 
   return (
     <div className="min-h-screen bg-[#fafafa]">
       <header className="py-40 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <motion.h1 
+          <motion.h1
             className="text-4xl font-serif mb-4 text-[#1a1a1a]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -97,18 +149,49 @@ const OneonOneCourse = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 1.5 }}
             >
-              {['A1 Level Beginner', 'A2 Level Beginner', 'B1 Level Intermediate', 'B2 Level Intermediate', 'Custom Advanced'].map((course, index) => (
+              {courses.map((course) => (
                 <motion.div
-                  key={course}
+                  key={course.id}
                   className="bg-white p-8 rounded-lg border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300"
                   whileHover={{ scale: 1.02 }}
                 >
-                  <h3 className="text-xl font-semibold mb-2 text-[#1a1a1a]">{course}</h3>
-                  <p className="text-[#666666] mb-6">Learn the basics of {course}.</p>
-                  <p className="text-2xl font-bold mb-6 text-[#1a1a1a]">${(100 + index * 1000) / 100}.00</p>
+                  <h3 className="text-xl font-semibold mb-2 text-[#1a1a1a]">{course.title}</h3>
+                  <p className="text-[#666666] mb-6">{course.description}</p>
+                  {course.id === 5 ? (
+                    <>
+                      <select
+                        className="mb-4 border border-gray-300 p-2 rounded-md w-full"
+                        onChange={(e) => {
+                          const selectedOption = course.priceOptions.find(option => option.label === e.target.value);
+                          setSelectedOption(selectedOption);
+                          setCustomPrice(selectedOption.price);
+                        }}
+                      >
+                        <option value="">Select a package</option>
+                        {course.priceOptions.map((option, index) => (
+                          <option key={index} value={option.label}>
+                            {option.label} - ${(option.price / 100).toFixed(2)}
+                          </option>
+                        ))}
+                      </select>
+                      {selectedOption && (
+                        <p className="text-2xl font-bold mb-6 text-[#1a1a1a]">
+                          ${((customPrice || 0) / 100).toFixed(2)}
+                        </p>
+                      )}
+                    </>
+                  ) : (
+                    <p className="text-2xl font-bold mb-6 text-[#1a1a1a]">${(course.price / 100).toFixed(2)}</p>
+                  )}
                   <button
                     className="w-full bg-[#1a1a1a] text-white py-2.5 rounded-md hover:bg-black transition-colors"
-                    onClick={() => setSelectedCourse(course)}
+                    onClick={() => {
+                      if (course.id === 5 && selectedOption) {
+                        setSelectedCourse(course);
+                      } else if (course.id !== 5) {
+                        setSelectedCourse(course);
+                      }
+                    }}
                   >
                     Learn More
                   </button>
@@ -141,8 +224,8 @@ const OneonOneCourse = () => {
               >
                 ×
               </button>
-              <h3 className="text-2xl font-semibold mb-2">{selectedCourse}</h3>
-              <p className="text-[#666666] mb-6">Learn the basics of {selectedCourse}.</p>
+              <h3 className="text-2xl font-semibold mb-2">{selectedCourse?.title}</h3>
+              <p className="text-[#666666] mb-6">{selectedCourse?.description}</p>
               
               <div className="mb-8">
                 <h4 className="font-semibold mb-4">Course Features:</h4>
@@ -153,12 +236,15 @@ const OneonOneCourse = () => {
               </div>
               
               <div className="flex items-center justify-between">
-                <p className="text-2xl font-bold">${(100) / 100}.00</p>
+                <p className="text-2xl font-bold">
+                  ${selectedCourse && selectedCourse.id === 5 && customPrice ? (customPrice / 100).toFixed(2) : (selectedCourse?.price / 100).toFixed(2)}
+                </p>
                 <motion.button
                   className="bg-[#1a1a1a] text-white px-6 py-2.5 rounded-md hover:bg-black transition-colors"
-                  onClick={() => handleCheckout(selectedCourse, 100)}
+                  onClick={() => handleCheckout(selectedCourse?.title, selectedCourse?.id === 5 ? customPrice : selectedCourse?.price)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  disabled={selectedCourse && selectedCourse.id === 5 && !customPrice}
                 >
                   Enroll Now
                 </motion.button>
