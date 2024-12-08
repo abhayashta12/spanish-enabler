@@ -16,12 +16,12 @@ const testimonials = [
   {
     quote: 'What I like about this community is that I can speak, hear, and interact with other people learning Spanish and that’s very helpful way to thrive to achieve a common goal.',
     name: 'Marko Satarain – Albuquerque, USA',
-    image: marko,
+    image: 'marko',
   },
   {
     quote: 'Highly recommend for anyone serious about learning Spanish.',
     name: 'Bayleigh Adams',
-    image: marko,
+    image: '/images/student-c.jpg',
   },
   {
     quote: 'I was able to move from beginner to intermediate stage with the help of the private tutors, and I’m very grateful for that. It’s helpful for me because it’s very interactive and you understand how I learn.',

@@ -4,29 +4,27 @@ import { EffectCoverflow, Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
-import chanel from '../assets/chanel.png';
-import marko from '../assets/marko.png';
 
 const testimonials = [
   {
     quote: 'There’s lot of variety, activities, and opportunities to chat with people. I actually feel like some of those people are my family. It’s been a really good experience.',
     name: 'Michelle Chew – London, England',
-    image: chanel,
+    image: '/images/student-a.jpg',
   },
   {
     quote: 'What I like about this community is that I can speak, hear, and interact with other people learning Spanish and that’s very helpful way to thrive to achieve a common goal.',
     name: 'Marko Satarain – Albuquerque, USA',
-    image: marko,
+    image: '/images/student-b.jpg',
   },
   {
     quote: 'Highly recommend for anyone serious about learning Spanish.',
     name: 'Bayleigh Adams',
-    image: marko,
+    image: '/images/student-c.jpg',
   },
   {
     quote: 'I was able to move from beginner to intermediate stage with the help of the private tutors, and I’m very grateful for that. It’s helpful for me because it’s very interactive and you understand how I learn.',
     name: 'Chanel Sims – Toronto, Canada',
-    image: chanel,
+    image: '/images/student-c.jpg',
   },
 ];
 

@@ -1,28 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import oneclass from '../assets/oneclass.png';
-import groupclass from '../assets/groupclass.png';
-import ssa from '../assets/ssa.png';
-
+import eleonora from '../assets/Eleonora.png';
+import juan from '../assets/Juan.png';
+import oneclass from '../assets/oneclass.png'
 
 
 const courses = [
   {
     title: 'One on One Session',
     description: 'Start your journey with personalized, individual attention from our expert instructors.',
-    image: oneclass,
+    image: juan,
     link: '/courses/OneonOne',
   },
   {
     title: 'Group Session',
     description: 'Learn collaboratively and practice with peers in our engaging group classes.',
-    image: groupclass,
+    image: eleonora,
     link: '/courses/Group',
   },
   {
     title: 'Spanish Speaking Accelerator Course',
     description: 'Break free from fear, build unstoppable confidence with real-time expert feedback, and start speaking Spnaihs effortlessly in record time',
-    image: ssa,
+    image: juan,
     link: '/courses/Group',
   },
 ];

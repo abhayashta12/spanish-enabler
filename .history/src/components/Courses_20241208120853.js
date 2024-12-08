@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import eleonora from '../assets/Eleonora.png';
+import juan from '../assets/Juan.png';
 import oneclass from '../assets/oneclass.png';
 import groupclass from '../assets/groupclass.png';
 import ssa from '../assets/ssa.png';
