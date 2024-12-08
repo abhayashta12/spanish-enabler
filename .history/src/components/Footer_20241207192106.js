@@ -1,23 +1,30 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 import { FaTiktok, FaInstagram, FaTwitter, FaLinkedin, FaYoutube } from "react-icons/fa";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+=======
+import React, { useState } from 'react';
+import { FaTiktok, FaInstagram, FaTwitter, FaLinkedin, FaYoutube } from 'react-icons/fa';
+
+const Footer = () => {
+  const [email, setEmail] = useState(''); // State to store the email input
+  const [message, setMessage] = useState(''); // State to store the success/error message
+>>>>>>> fabf0c6878df882c424e1b708dddd33353505ee4
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const mailchimpURL = "https://<dc>.list-manage.com/subscribe/post-json?u=<u>&id=<id>&c=?";
-    const url = `${mailchimpURL}&EMAIL=${encodeURIComponent(email)}`;
-
+<<<<<<< HEAD
     try {
-      const response = await fetch(url, {
+      const response = await fetch("/subscribe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        mode: "no-cors", // Allows communication with Mailchimp
+        body: JSON.stringify({ email }),
       });
 
       if (response.ok) {
@@ -28,6 +35,31 @@ const Footer = () => {
       }
     } catch (error) {
       setMessage("An error occurred. Please try again.");
+=======
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setMessage('Please enter a valid email address.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/subscribe`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });      
+
+      if (response.ok) {
+        setMessage('Thank you for subscribing!');
+        setEmail(''); // Clear the input field on success
+      } else {
+        setMessage('Failed to subscribe. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error subscribing:', error);
+      setMessage('An error occurred. Please try again.');
+>>>>>>> fabf0c6878df882c424e1b708dddd33353505ee4
     }
   };
 
@@ -112,7 +144,11 @@ const Footer = () => {
           <p className="text-sm text-gray-400 mb-4">
             Stay updated with our latest courses and tips.
           </p>
+<<<<<<< HEAD
           <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+=======
+          <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
+>>>>>>> fabf0c6878df882c424e1b708dddd33353505ee4
             <input
               type="email"
               placeholder="Enter your email"
@@ -128,14 +164,26 @@ const Footer = () => {
               Subscribe
             </button>
           </form>
+<<<<<<< HEAD
           {message && <p className="mt-4 text-sm text-yellow-400">{message}</p>}
+=======
+          {message && (
+            <p className={`mt-4 text-sm ${message.includes('Thank') ? 'text-green-400' : 'text-red-400'}`}>
+              {message}
+            </p>
+          )}
+>>>>>>> fabf0c6878df882c424e1b708dddd33353505ee4
         </div>
       </div>
 
       {/* Footer Bottom Section */}
       <div className="mt-10 border-t border-gray-800 pt-4">
         <div className="text-center text-gray-400 text-sm">
+<<<<<<< HEAD
           <p>&copy; {new Date().getFullYear()} Spanish Enabler. All Rights Reserved.</p>
+=======
+          <p>&copy; {new Date().getFullYear()} The Spanish Enabler. All Rights Reserved.</p>
+>>>>>>> fabf0c6878df882c424e1b708dddd33353505ee4
           <p className="space-x-2">
             <a href="#privacy" className="hover:text-white hover:underline">
               Privacy Policy

@@ -21,7 +21,7 @@ const courses = [
     title: 'Spanish Speaking Accelerator Course',
     description: 'Break free from fear, build unstoppable confidence with real-time expert feedback, and start speaking Spnaihs effortlessly in record time',
     image: juan,
-    link: '/courses/Group',
+    link: '/courses/SpanishAccelerator',
   },
 ];
 

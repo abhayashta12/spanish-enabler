@@ -8,16 +8,13 @@ const Footer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const mailchimpURL = "https://<dc>.list-manage.com/subscribe/post-json?u=<u>&id=<id>&c=?";
-    const url = `${mailchimpURL}&EMAIL=${encodeURIComponent(email)}`;
-
     try {
-      const response = await fetch(url, {
+      const response = await fetch("/subscribe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        mode: "no-cors", // Allows communication with Mailchimp
+        body: JSON.stringify({ email }),
       });
 
       if (response.ok) {

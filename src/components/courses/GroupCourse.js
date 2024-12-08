@@ -1,8 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import Confetti from 'react-confetti';
 
 const GroupCourse = () => {
   const [expandedFaq, setExpandedFaq] = useState(null);
+  const [couponCode, setCouponCode] = useState('');
+  const [discountApplied, setDiscountApplied] = useState(false);
+  const [discountedPrice, setDiscountedPrice] = useState(80000); // in cents ($800.00)
+  const [showConfetti, setShowConfetti] = useState(true);
+
+  useEffect(() => {
+    // Show confetti for 5 seconds when page loads
+    const timer = setTimeout(() => {
+      setShowConfetti(false);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const courses = [
     {
@@ -57,12 +70,12 @@ const GroupCourse = () => {
           // Sending specific course data depending on which course button is clicked
           courseName: courseName,
           price: price, // Price in cents
-          originPage: 'Group', // Specify that this request is coming from the OneOnOneCourse page
+          originPage: 'Group',
         }),
       });
-  
+
       const session = await response.json();
-  
+
       // Check if the session response has the URL
       if (session.url) {
         // Redirect to Stripe Checkout
@@ -74,9 +87,36 @@ const GroupCourse = () => {
       console.error('Error:', error);
     }
   };
-  
+
+  const handleApplyCoupon = () => {
+    // Simple coupon code logic for demo purposes
+    if (couponCode === 'BLACKFRIDAY' && !discountApplied) {
+      const discountAmount = 56700; // Set discount price to $567 in cents
+      setDiscountedPrice(discountAmount);
+      setDiscountApplied(true);
+    } else {
+      alert('Invalid coupon code or coupon already applied');
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen bg-[#fafafa] relative pb-16">
+      {/* Black Friday Floating Banner */}
+      <div className="fixed top-0 w-full bg-black text-white text-center py-3 z-50 shadow-md" style={{ top: '80px' }}>
+        🎉 Black Friday Special Offer - Limited Time Only! 🎉
+      </div>
+
+      {/* Confetti for Black Friday Offer */}
+      {showConfetti && (
+        <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          numberOfPieces={400}
+          recycle={false}
+          run={true}
+        />
+      )}
+
       <header className="py-40 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl font-serif mb-4 text-[#1a1a1a]">
@@ -98,16 +138,34 @@ const GroupCourse = () => {
         <section id="courses" className="py-20 px-4">
           <div className="max-w-6xl mx-auto mb-12">
             <motion.div
-              className="bg-white p-8 rounded-lg border border-gray-200 shadow-lg"
+              className="bg-white p-8 rounded-lg border border-gray-200 shadow-lg relative"
               whileHover={{ scale: 1.05 }}
             >
               <h2 className="text-3xl font-bold text-[#1a1a1a] mb-4">Spanish Speaking Accelerator</h2>
-              <p className="text-lg text-[#666666] mb-6">Accelerate your Spanish speaking skills with our intensive accelerator course designed for rapid progress.</p>
-              <p className="text-2xl font-bold text-red-600 mb-2 line-through">$800.00</p>
-              <p className="text-3xl font-bold text-green-600 mb-6">Special Offer: $567.00</p>
+              <p className="text-lg text-[#666666] mb-6">
+                Accelerate your Spanish speaking skills with our intensive accelerator course designed for rapid progress.
+              </p>
+              <p className="text-3xl font-bold text-green-600 mb-6">
+                Price: ${(discountedPrice / 100).toFixed(2)}
+              </p>
+              <div className="mb-6">
+                <input
+                  type="text"
+                  placeholder="Enter coupon code"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value)}
+                  className="border border-gray-400 p-2 rounded-md w-2/3 mr-2"
+                />
+                <button
+                  className="bg-[#1a1a1a] text-white px-4 py-2 rounded-md hover:bg-black transition-colors"
+                  onClick={handleApplyCoupon}
+                >
+                  Apply Coupon
+                </button>
+              </div>
               <button
                 className="w-full bg-[#1a1a1a] text-white py-2.5 rounded-md hover:bg-black transition-colors"
-                onClick={() => handleCheckout('Spanish Speaking Accelerator', 56700)}
+                onClick={() => handleCheckout('Spanish Speaking Accelerator', discountedPrice)}
               >
                 Enroll Now
               </button>
@@ -131,7 +189,7 @@ const GroupCourse = () => {
                     className="text-white text-2xl font-bold"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }}
+                    transition={{ duration: 1, repeat: Infinity, repeatType: 'reverse' }}
                   >
                     Coming Soon
                   </motion.p>

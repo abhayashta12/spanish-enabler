@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import eleonora from '../assets/Eleonora.png';
 import juan from '../assets/Juan.png';
 
-
 const courses = [
   {
     title: 'One on One Session',
@@ -15,12 +14,6 @@ const courses = [
     title: 'Group Session',
     description: 'Learn collaboratively and practice with peers in our engaging group classes.',
     image: eleonora,
-    link: '/courses/Group',
-  },
-  {
-    title: 'Spanish Speaking Accelerator Course',
-    description: 'Break free from fear, build unstoppable confidence with real-time expert feedback, and start speaking Spnaihs effortlessly in record time',
-    image: juan,
     link: '/courses/Group',
   },
 ];

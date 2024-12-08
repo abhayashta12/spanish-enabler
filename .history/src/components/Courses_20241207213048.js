@@ -19,9 +19,9 @@ const courses = [
   },
   {
     title: 'Spanish Speaking Accelerator Course',
-    description: 'Break free from fear, build unstoppable confidence with real-time expert feedback, and start speaking Spnaihs effortlessly in record time',
+    description: 'Accelerate your Spanish speaking skills through our immersive and intensive sessions.',
     image: juan,
-    link: '/courses/Group',
+    link: '/courses/SpanishAccelerator',
   },
 ];
 
