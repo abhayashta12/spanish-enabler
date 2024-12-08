@@ -7,13 +7,13 @@ import 'swiper/css/pagination';
 
 const testimonials = [
   {
-    quote: 'An amazing teacher who made learning fun!',
-    name: 'Michael Paredes',
-    image: '/images/student-a.jpg', // Replace with actual image paths
+    quote: 'There’s lot of variety, activities, and opportunities to chat with people. I actually feel like some of those people are my family. It’s been a really good experience.',
+    name: 'Michelle Chew – London, England',
+    image: '/images/student-a.jpg',
   },
   {
-    quote: 'I achieved fluency faster than I thought possible.',
-    name: 'Sally Swift',
+    quote: 'What I like about this community is that I can speak, hear, and interact with other people learning Spanish and that’s very helpful way to thrive to achieve a common goal.',
+    name: 'Marko Satarain – Albuquerque, USA',
     image: '/images/student-b.jpg',
   },
   {
@@ -21,7 +21,11 @@ const testimonials = [
     name: 'Bayleigh Adams',
     image: '/images/student-c.jpg',
   },
-  // Add more testimonials as needed
+  {
+    quote: 'I was able to move from beginner to intermediate stage with the help of the private tutors, and I’m very grateful for that. It’s helpful for me because it’s very interactive and you understand how I learn.',
+    name: 'Chanel Sims – Toronto, Canada',
+    image: '/images/student-c.jpg',
+  },
 ];
 
 const Testimonials = () => (
