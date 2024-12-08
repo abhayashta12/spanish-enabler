@@ -92,8 +92,8 @@ const Hero = () => {
                     transition={{ delay: 0.3 }}
                     className="text-base text-gray-600 leading-relaxed"
                   >
-                    Take your Spanish to the Next Level. <br/><br/>
-                    Get exclusive tips, practical tools, and updates to help you speak Spanish confidently.
+                    Join our community of language enthusiasts and receive
+                    exclusive tips, resources, and special offers.
                   </motion.p>
                 </div>
 
@@ -122,7 +122,7 @@ const Hero = () => {
                   onClick={handleSubscribe}
                   className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
                 >
-                  Sign Up Now
+                  Subscribe Now
                 </motion.button>
 
                 <motion.p
