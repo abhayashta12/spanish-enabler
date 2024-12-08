@@ -61,7 +61,7 @@ const Contact = () => {
           Get in Touch
         </h2>
         <p className="text-center text-gray-600 mb-12">
-          Ready to speak Spanish confidently? Get in touch today and start your journey!
+          We'd love to hear from you. Fill out the form below and we'll get back to you as soon as possible.
         </p>
 
         {successMessage && (

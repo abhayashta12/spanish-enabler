@@ -7,7 +7,7 @@ import axios from 'axios';
 
 const Stats = () => {
   const [stats, setStats] = useState({
-    followers: 500000,
+    followers: 600000,
     impressions: 3000000,
     speakers: 3000,
   });
@@ -40,7 +40,7 @@ const Stats = () => {
               <FaUserFriends size={50} className="animate-pulse" />
             </div>
             <h3 className="text-4xl font-bold mb-2 text-gray-800">
-              <CountUp end={stats.followers / 1000} duration={2.5} separator="," suffix="k+" />
+              <CountUp end={stats.followers / 1000} duration={2.5} separator="," suffix="k" />
             </h3>
             <p className="text-lg text-gray-600">TikTok and Instagram Followers</p>
           </div>
@@ -58,7 +58,7 @@ const Stats = () => {
               <FaLanguage size={50} className="animate-pulse" />
             </div>
             <h3 className="text-4xl font-bold mb-2 text-gray-800">
-              <CountUp end={stats.speakers / 1000} duration={2.5} separator="," suffix="k+" />
+              <CountUp end={stats.speakers / 1000} duration={2.5} separator="," suffix="k" />
             </h3>
             <p className="text-lg text-gray-600">Skool Community</p>
           </div>

@@ -58,7 +58,7 @@ const Stats = () => {
               <FaLanguage size={50} className="animate-pulse" />
             </div>
             <h3 className="text-4xl font-bold mb-2 text-gray-800">
-              <CountUp end={stats.speakers / 1000} duration={2.5} separator="," suffix="k+" />
+              <CountUp end={stats.speakers / 1000} duration={2.5} separator="," suffix="k" />
             </h3>
             <p className="text-lg text-gray-600">Skool Community</p>
           </div>
