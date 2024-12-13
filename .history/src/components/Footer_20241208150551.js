@@ -8,8 +8,7 @@ const Footer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const mailchimpURL = `https://${process.env.REACT_APP_MAILCHIMP_DC}.list-manage.com/subscribe/post-json?u=${process.env.REACT_APP_MAILCHIMP_U}&id=${process.env.REACT_APP_MAILCHIMP_ID}&c=?`;
-
+    const mailchimpURL = "https://us22.list-manage.com/subscribe/post-json?u=<u>&id=<id>&c=?";
     const url = `${mailchimpURL}&EMAIL=${encodeURIComponent(email)}`;
 
     try {
