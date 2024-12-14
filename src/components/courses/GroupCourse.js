@@ -13,10 +13,10 @@ const GroupCourse = () => {
 
 
   useEffect(() => {
-    // Show confetti for 5 seconds when page loads
+    // Show confetti for 6 seconds when page loads
     const timer = setTimeout(() => {
       setShowConfetti(false);
-    }, 4000);
+    }, 6000);
     return () => clearTimeout(timer);
   }, []);
 
