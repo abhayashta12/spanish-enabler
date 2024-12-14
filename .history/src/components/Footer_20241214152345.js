@@ -7,7 +7,6 @@ const Footer = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage("");
 
     try {
       // Ensure REACT_APP_API_URL points to your server, e.g. http://localhost:4242
