@@ -6,12 +6,13 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import chanel from '../assets/chanel.png';
 import marko from '../assets/marko.png';
+import chew from '../assets/chew.png'
 
 const testimonials = [
   {
     quote: 'There’s lot of variety, activities, and opportunities to chat with people. I actually feel like some of those people are my family. It’s been a really good experience.',
     name: 'Michelle Chew – London, England',
-    image: chanel,
+    image: chew,
   },
   {
     quote: 'What I like about this community is that I can speak, hear, and interact with other people learning Spanish and that’s very helpful way to thrive to achieve a common goal.',
