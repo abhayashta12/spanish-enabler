@@ -5,11 +5,13 @@ const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const axios = require('axios'); // To make HTTP requests
+const morgan = require('morgan'); // For logging
 const app = express();
 
 // Middleware
 app.use(express.static('public'));
 app.use(express.json());
+app.use(morgan('combined')); // Log HTTP requests
 
 // CORS: Restrict origins to the client URL
 app.use(cors({
@@ -17,6 +19,23 @@ app.use(cors({
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type'],
 }));
+
+// Rate Limiting: Prevent abuse
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: "Too many requests from this IP, please try again later.",
+});
+app.use(limiter);
+
+// Security Headers
+app.use(helmet());
+
+// Ensure Environment Variables Are Set
+if (!process.env.STRIPE_SECRET_KEY || !process.env.CLIENT_URL || !process.env.STRIPE_WEBHOOK_SECRET) {
+  console.error("Required environment variables must be set (STRIPE_SECRET_KEY, CLIENT_URL, STRIPE_WEBHOOK_SECRET).");
+  process.exit(1); // Exit if required environment variables are missing
+}
 
 // Mailchimp Newsletter Endpoint
 app.post('/subscribe', async (req, res) => {
@@ -50,23 +69,6 @@ app.post('/subscribe', async (req, res) => {
   }
 });
 
-// Rate Limiting: Prevent abuse
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
-  message: "Too many requests from this IP, please try again later.",
-});
-app.use(limiter);
-
-// Security Headers
-app.use(helmet());
-
-// Ensure Environment Variables Are Set
-if (!process.env.STRIPE_SECRET_KEY || !process.env.CLIENT_URL) {
-  console.error("Environment variables STRIPE_SECRET_KEY and CLIENT_URL must be set.");
-  process.exit(1); // Exit if required environment variables are missing
-}
-
 // Endpoint for retrieving checkout session details
 app.get('/retrieve-checkout-session/:sessionId', async (req, res) => {
   try {
@@ -96,14 +98,9 @@ app.post('/create-checkout-session', async (req, res) => {
     }
 
     // Determine the appropriate cancel URL based on the origin page
-    let cancelUrl;
-    if (originPage === 'Group') {
-      cancelUrl = `${process.env.CLIENT_URL}/courses/Group`;
-    } else if (originPage === 'oneonone') {
-      cancelUrl = `${process.env.CLIENT_URL}/courses/OneonOne`;
-    } else {
-      cancelUrl = `${process.env.CLIENT_URL}#courses`; // fallback to general courses page
-    }
+    let cancelUrl = `${process.env.CLIENT_URL}#courses`;
+    if (originPage === 'Group') cancelUrl = `${process.env.CLIENT_URL}/courses/Group`;
+    if (originPage === 'oneonone') cancelUrl = `${process.env.CLIENT_URL}/courses/OneonOne`;
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -115,22 +112,49 @@ app.post('/create-checkout-session', async (req, res) => {
             product_data: {
               name: courseName,
             },
-            unit_amount: price, 
+            unit_amount: price,
           },
           quantity: 1,
         },
       ],
-      success_url: `${process.env.CLIENT_URL}/success?session_id={CHECKOUT_SESSION_ID}`, // Send the session ID to success page
+      success_url: `${process.env.CLIENT_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: cancelUrl,
-      metadata: {
-        courseName: courseName, // Store course name in metadata
-      },
+      metadata: { courseName },
     });
 
     res.json({ url: session.url });
   } catch (e) {
     console.error(`Error creating checkout session: ${e.message}`);
     res.status(500).json({ error: 'Failed to create checkout session.' });
+  }
+});
+
+// Webhook Endpoint for Stripe Events
+app.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
+  const sig = req.headers['stripe-signature'];
+
+  try {
+    const event = stripe.webhooks.constructEvent(
+      req.body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET // Set this in .env
+    );
+
+    // Handle the event
+    switch (event.type) {
+      case 'checkout.session.completed':
+        const session = event.data.object;
+        console.log(`Payment succeeded for session: ${session.id}`);
+        // Perform post-payment actions here (e.g., update the database)
+        break;
+      default:
+        console.log(`Unhandled event type: ${event.type}`);
+    }
+
+    res.json({ received: true });
+  } catch (err) {
+    console.error(`Webhook Error: ${err.message}`);
+    res.status(400).send(`Webhook Error: ${err.message}`);
   }
 });
 

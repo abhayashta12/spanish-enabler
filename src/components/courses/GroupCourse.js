@@ -8,12 +8,15 @@ const GroupCourse = () => {
   const [discountApplied, setDiscountApplied] = useState(false);
   const [discountedPrice, setDiscountedPrice] = useState(80000); // in cents ($800.00)
   const [showConfetti, setShowConfetti] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const API_BASE_URL = process.env.REACT_APP_API_URL
+
 
   useEffect(() => {
-    // Show confetti for 5 seconds when page loads
+    // Show confetti for 6 seconds when page loads
     const timer = setTimeout(() => {
       setShowConfetti(false);
-    }, 5000);
+    }, 6000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -59,9 +62,10 @@ const GroupCourse = () => {
   ];
 
   const handleCheckout = async (courseName, price) => {
+    setLoading(true);
     try {
       // Sending a request to the backend server to create a Stripe checkout session
-      const response = await fetch('http://localhost:4242/create-checkout-session', {
+      const response = await fetch(`${API_BASE_URL}/create-checkout-session`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,13 +89,14 @@ const GroupCourse = () => {
       }
     } catch (error) {
       console.error('Error:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleApplyCoupon = () => {
-    // Simple coupon code logic for demo purposes
-    if (couponCode === 'BLACKFRIDAY' && !discountApplied) {
-      const discountAmount = 56700; // Set discount price to $567 in cents
+    if (couponCode === 'SPANISHSPECIAL' && !discountApplied) {
+      const discountAmount = 56700; // Price in Cents
       setDiscountedPrice(discountAmount);
       setDiscountApplied(true);
     } else {
@@ -103,7 +108,7 @@ const GroupCourse = () => {
     <div className="min-h-screen bg-[#fafafa] relative pb-16">
       {/* Black Friday Floating Banner */}
       <div className="fixed top-0 w-full bg-black text-white text-center py-3 z-50 shadow-md" style={{ top: '80px' }}>
-        🎉 Black Friday Special Offer - Limited Time Only! 🎉
+        🎉 Holiday Special Offer - Limited Time Only! 🎉
       </div>
 
       {/* Confetti for Black Friday Offer */}
@@ -164,10 +169,13 @@ const GroupCourse = () => {
                 </button>
               </div>
               <button
-                className="w-full bg-[#1a1a1a] text-white py-2.5 rounded-md hover:bg-black transition-colors"
+                 className={`w-full bg-[#1a1a1a] text-white py-2.5 rounded-md hover:bg-black transition-colors ${
+                  loading ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
                 onClick={() => handleCheckout('Spanish Speaking Accelerator', discountedPrice)}
+                disabled={loading}
               >
-                Enroll Now
+               {loading ? 'Processing...' : 'Enroll Now'}
               </button>
             </motion.div>
           </div>
