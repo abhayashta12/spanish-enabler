@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Confetti from 'react-confetti';
 
 const GroupCourse = () => {
@@ -9,16 +9,37 @@ const GroupCourse = () => {
   const [discountedPrice, setDiscountedPrice] = useState(80000); // in cents ($800.00)
   const [showConfetti, setShowConfetti] = useState(true);
   const [loading, setLoading] = useState(false);
-  const API_BASE_URL = process.env.REACT_APP_API_URL
 
+  // New state for handling popup similar to OneonOneCourse
+  const [selectedCourse, setSelectedCourse] = useState(null);
+
+  const API_BASE_URL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
-    // Show confetti for 6 seconds when page loads
+    // Ensure page starts at top
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    // Show confetti instantly and hide after 6 seconds
     const timer = setTimeout(() => {
       setShowConfetti(false);
     }, 6000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    // Control body overflow based on popup
+    if (selectedCourse) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedCourse]);
 
   const courses = [
     {
@@ -64,25 +85,21 @@ const GroupCourse = () => {
   const handleCheckout = async (courseName, price) => {
     setLoading(true);
     try {
-      // Sending a request to the backend server to create a Stripe checkout session
       const response = await fetch(`${API_BASE_URL}/create-checkout-session`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          // Sending specific course data depending on which course button is clicked
           courseName: courseName,
-          price: price, // Price in cents
+          price: price,
           originPage: 'Group',
         }),
       });
 
       const session = await response.json();
 
-      // Check if the session response has the URL
       if (session.url) {
-        // Redirect to Stripe Checkout
         window.location.href = session.url;
       } else {
         console.error('Checkout session creation failed:', session);
@@ -111,7 +128,7 @@ const GroupCourse = () => {
         🎉 Holiday Special Offer - Limited Time Only! 🎉
       </div>
 
-      {/* Confetti for Black Friday Offer */}
+      {/* Confetti */}
       {showConfetti && (
         <Confetti
           width={window.innerWidth}
@@ -148,7 +165,7 @@ const GroupCourse = () => {
             >
               <h2 className="text-3xl font-bold text-[#1a1a1a] mb-4">Spanish Speaking Accelerator</h2>
               <p className="text-lg text-[#666666] mb-6">
-                Accelerate your Spanish speaking skills with our intensive accelerator course designed for rapid progress.
+                Start speaking Spanish confidently in just 3 weeks—or your money back!
               </p>
               <p className="text-3xl font-bold text-green-600 mb-6">
                 Price: ${(discountedPrice / 100).toFixed(2)}
@@ -169,13 +186,19 @@ const GroupCourse = () => {
                 </button>
               </div>
               <button
-                 className={`w-full bg-[#1a1a1a] text-white py-2.5 rounded-md hover:bg-black transition-colors ${
+                className={`w-full bg-[#1a1a1a] text-white py-2.5 rounded-md hover:bg-black transition-colors ${
                   loading ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
-                onClick={() => handleCheckout('Spanish Speaking Accelerator', discountedPrice)}
+                onClick={() => {
+                  setSelectedCourse({
+                    title: 'Spanish Speaking Accelerator',
+                    description: 'Start speaking Spanish confidently in just 3 weeks—or your money back!',
+                    price: discountedPrice
+                  });
+                }}
                 disabled={loading}
               >
-               {loading ? 'Processing...' : 'Enroll Now'}
+                Learn More
               </button>
             </motion.div>
           </div>
@@ -229,6 +252,85 @@ const GroupCourse = () => {
           </div>
         </section>
       </main>
+
+      <AnimatePresence>
+        {selectedCourse && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+            onClick={() => setSelectedCourse(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="bg-white p-8 rounded-lg max-w-md w-full relative shadow-lg"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setSelectedCourse(null)}
+                className="absolute right-4 top-4 text-[#1a1a1a] hover:text-gray-700 text-4xl"
+              >
+                ×
+              </button>
+              <h3 className="text-2xl font-semibold mb-2">{selectedCourse.title}</h3>
+              <p className="text-[#666666] mb-6">{selectedCourse.description}</p>
+              
+              <div className="mb-8">
+                <h4 className="font-semibold mb-4">Benefits:</h4>
+                <ul className="list-disc pl-5 space-y-2 text-sm">
+                   <li className="text-[#1a1a1a]">
+                   <strong>Speak Naturally, Fast:</strong> Skip the grammar drills and get straight to speaking with real-time feedback from expert teachers.
+                   </li>
+                   <li className="text-[#1a1a1a]">
+                   <strong>Tailored for You:</strong> Personalized coaching ensures you overcome your unique challenges and see instant progress.
+                   </li>
+                   <li className="text-[#1a1a1a]">
+                   <strong>Practical, Real-World Focus:</strong> Master Spanish for life, work, and travel—no fluff, just skills you’ll actually use.
+                   </li>
+                   </ul><br/>
+
+
+                 <h4 className="font-semibold mb-4">Transformation:</h4>
+                 <ul className="list-disc pl-5 space-y-2 text-sm">
+                   <li className="text-[#1a1a1a]">
+                   <strong>From Stuck to Fluent:</strong> Break through fear and hesitation to confidently hold Spanish conversations anywhere.
+                   </li>
+                   <li className="text-[#1a1a1a]">
+                   <strong>From Awkward to Authentic:</strong>  Speak like a native by practicing real-life scenarios and cultural nuances.
+                   </li>
+                   <li className="text-[#1a1a1a]">
+                   <strong>From Learning Alone to Thriving Together:</strong> Join a vibrant community of learners and unlock fluency faster through collaboration.
+                   </li>
+                   </ul>
+                   <br/>
+
+                   <p className="text-lg text-[#1a1a1a] mb-6 "> <strong>
+                   Why wait? Join now and transform the way you learn Spanish forever!
+                   </strong>
+              </p>
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <p className="text-2xl font-bold">
+                  ${(selectedCourse.price / 100).toFixed(2)}
+                </p>
+                <motion.button
+                  className="bg-[#1a1a1a] text-white px-6 py-2.5 rounded-md hover:bg-black transition-colors"
+                  onClick={() => handleCheckout(selectedCourse.title, selectedCourse.price)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  disabled={loading}
+                >
+                  {loading ? 'Processing...' : 'Enroll Now'}
+                </motion.button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

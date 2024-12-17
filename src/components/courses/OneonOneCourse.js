@@ -10,32 +10,37 @@ const OneonOneCourse = () => {
   const courses = [
     {
       id: 1,
-      title: 'A1 Level Beginner',
-      description: 'Learn the basics of A1 Level Beginner.',
+      title: 'A1 - Beginner',
+      description: 'Start your Spanish journey: Speak confidently from day',
       price: 2160000, 
+      learnmore:'Embark on an interactive journey that transforms "hola" into meaningful conversations.',
     },
     {
       id: 2,
-      title: 'A2 Level Beginner',
-      description: 'Learn the basics of A2 Level Beginner.',
+      title: 'A2 - Elementary',
+      description: 'Build your foundation: Speak Spanish like it’s second',
       price: 270000, 
+      learnmore:'Gain practical skills and confidence to navigate everyday situations effortlessly.'
     },
     {
       id: 3,
-      title: 'B1 Level Intermediate',
-      description: 'Learn the basics of B1 Level Intermediate.',
+      title: 'B1 - Intermediate',
+      description: 'Find your voice: Express your ideas and connect with Spanish speakers.',
       price: 324000,
+      learnmore:'Immerse yourself in dynamic content that boosts your speaking and comprehension skills.'
     },
     {
       id: 4,
       title: 'B2 Level Intermediate',
-      description: 'Learn the basics of B2 Level Intermediate.',
+      description: 'Master the art of conversation—speak Spanish with nuance and flair',
       price: 405000, 
+      learnmore:'Refine your abilities with advanced topics and authentic cultural experiences.'
     },
     {
       id: 5,
       title: 'Custom Advanced',
       description: 'Learn the basics of Custom Advanced.',
+      learnmore:'Refine your abilities with advanced topics and authentic cultural experiences.',
       priceOptions: [
         {
           label: 'On Demand - 1 Unit (2 Hours)',
@@ -228,10 +233,9 @@ const OneonOneCourse = () => {
               <p className="text-[#666666] mb-6">{selectedCourse?.description}</p>
               
               <div className="mb-8">
-                <h4 className="font-semibold mb-4">Course Features:</h4>
+                <h4 className="font-semibold mb-4">What do you get?</h4>
                 <ul className="list-disc pl-5 space-y-2">
-                  <li className="text-[#1a1a1a]">Feature 1</li>
-                  <li className="text-[#1a1a1a]">Feature 2</li>
+                  <li className="text-[#1a1a1a]">{selectedCourse.learnmore}</li>
                 </ul>
               </div>
               
