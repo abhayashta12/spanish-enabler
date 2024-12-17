@@ -12,7 +12,7 @@ const OneonOneCourse = () => {
       id: 1,
       title: 'A1 Level Beginner',
       description: 'Learn the basics of A1 Level Beginner.',
-      price: 216000, 
+      price: 2160000, 
     },
     {
       id: 2,
