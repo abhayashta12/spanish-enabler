@@ -7,25 +7,27 @@ const Footer = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage("");
+
+    const mailchimpURL = `https://${process.env.REACT_APP_MAILCHIMP_DC}.list-manage.com/subscribe/post-json?u=${process.env.REACT_APP_MAILCHIMP_U}&id=${process.env.REACT_APP_MAILCHIMP_ID}&c=?`;
+
+    const url = `${mailchimpURL}&EMAIL=${encodeURIComponent(email)}`;
 
     try {
-      // Ensure REACT_APP_API_URL points to your server, e.g. http://localhost:4242
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/subscribe`, {
+      const response = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "no-cors", // Allows communication with Mailchimp
       });
 
       if (response.ok) {
-        const data = await response.json();
-        setMessage(data.message || "Subscription successful!");
+        setMessage("Thank you for subscribing!");
         setEmail("");
       } else {
-        const error = await response.json();
-        setMessage(error.error || "Failed to subscribe. Please try again.");
+        setMessage("An error occurred. Please try again.");
       }
-    } catch (err) {
+    } catch (error) {
       setMessage("An error occurred. Please try again.");
     }
   };
