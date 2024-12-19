@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+ 
 
 const Resources = () => (
   <section id="resources" className="py-24 bg-gradient-to-b from-white to-gray-100">

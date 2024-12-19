@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import david from "../assets/david.png";
+ 
 
 const Hero = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -268,12 +269,12 @@ const Hero = () => {
             </a>
             <Link to="/courses/OneonOne">
               <button className="border-2 border-blue-500 hover:bg-blue-500 hover:from-blue-500 hover:to-blue-700 text-white font-semibold py-3 px-8 rounded-full m-2 transition-all duration-300">
-                ONE ON ONE SESSION
+                ONE ON ONE COACHING
               </button>
             </Link>
             <Link to="/courses/Group">
               <button className="border-2 border-blue-500 hover:bg-blue-500 text-white font-semibold py-3 px-8 rounded-full m-2 transition-all duration-300">
-                GROUP SESSION
+                GROUP COACHING
               </button>
             </Link>
           </div>

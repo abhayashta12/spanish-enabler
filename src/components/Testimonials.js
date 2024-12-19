@@ -7,6 +7,8 @@ import 'swiper/css/pagination';
 import chanel from '../assets/chanel.png';
 import marko from '../assets/marko.png';
 import chew from '../assets/chew.png'
+import nick from '../assets/nick.png'
+import jo from '../assets/jo.png'
 
 const testimonials = [
   {
@@ -20,19 +22,25 @@ const testimonials = [
     image: marko,
   },
   {
-    quote: 'Highly recommend for anyone serious about learning Spanish.',
-    name: 'Bayleigh Adams',
-    image: marko,
+    quote: 'David helped grow my confidence in speaking Spanish. I could ask all the questions I needed and he would explain in a way I would understand and remember. I visited Spain and it was amazing having conversations in Spanish and impressing my friends and family.',
+    name: 'Jo Downs - Toronto, Canada',
+    image: jo,
   },
   {
     quote: 'I was able to move from beginner to intermediate stage with the help of the private tutors, and I’m very grateful for that. It’s helpful for me because it’s very interactive and you understand how I learn.',
     name: 'Chanel Sims – Toronto, Canada',
     image: chanel,
   },
+  {
+    quote: 'David’s support was fundamental during my Spanish learning process. He helped me to acquire vocabulary related to my field which resulted in new career opportunities for me that include leading teams across the Americas',
+    name: 'Nick Hewer – Toronto, Canada',
+    image: nick,
+  },
 ];
 
 const Testimonials = () => (
-  <section id="testimonials" className="py-20 bg-gradient-to-b from-gray-100 to-white relative overflow-hidden">
+  <section id="testimonials" className="py-20 bg-gradient-to-b from-gray-100 to-white relative overflow-hidden testimonial-cardconsole.log('Testimonials component rendered');
+console.log('Testimonials data:', testimonials);">
     <div className="absolute inset-0 bg-opacity-5 bg-gray-100 pattern-dots pattern-size-2 pattern-opacity-5"></div>
     <div className="container mx-auto text-center relative z-10">
       <h2 className="text-5xl font-serif font-bold mb-4 text-gray-800">What My Students Say</h2>

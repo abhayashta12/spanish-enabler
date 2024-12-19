@@ -142,7 +142,7 @@ const GroupCourse = () => {
       <header className="py-40 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl font-serif mb-4 text-[#1a1a1a]">
-            Master Spanish in a Group
+            Master Spanish with Group Coaching
           </h1>
           <p className="text-lg mb-8 text-[#666666]">
             Join our group sessions and learn Spanish with peers. Start your journey to fluency today!

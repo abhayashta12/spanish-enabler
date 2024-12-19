@@ -12,7 +12,7 @@ const OneonOneCourse = () => {
       id: 1,
       title: 'A1 - Beginner',
       description: 'Start your Spanish journey: Speak confidently from day',
-      price: 2160000, 
+      price: 216000, 
       learnmore:'Embark on an interactive journey that transforms "hola" into meaningful conversations.',
     },
     {
@@ -116,7 +116,7 @@ const OneonOneCourse = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            Master Spanish One-on-One
+            Master Spanish with One-on-One Coaching
           </motion.h1>
           <motion.p
             className="text-lg mb-8 text-[#666666]"

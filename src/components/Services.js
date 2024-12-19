@@ -1,7 +1,5 @@
-// src/components/Services.js
-
 import React from 'react';
-import './Services.css'; // Assuming you will have a corresponding CSS file
+import './Services.css';
 
 const services = [
   {

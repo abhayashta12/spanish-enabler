@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaTiktok, FaInstagram, FaTwitter, FaLinkedin, FaYoutube } from "react-icons/fa";
+ 
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -111,7 +112,7 @@ const Footer = () => {
           <p className="text-sm text-gray-400 mb-4">
             Stay updated with our latest courses and tips.
           </p>
-          <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+          <form onSubmit={handleSubmit} className="newsletter-bar flex flex-col space-y-4">
             <input
               type="email"
               placeholder="Enter your email"

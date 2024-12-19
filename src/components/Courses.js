@@ -3,18 +3,19 @@ import { Link } from 'react-router-dom';
 import oneclass from '../assets/oneclass.png';
 import groupclass from '../assets/groupclass.png';
 import ssa from '../assets/ssa.png';
+ 
 
 
 
 const courses = [
   {
-    title: 'One on One Session',
+    title: 'One on One Coaching',
     description: 'Start your journey with personalized, individual attention from our expert instructors.',
     image: oneclass,
     link: '/courses/OneonOne',
   },
   {
-    title: 'Group Session',
+    title: 'Group Coaching',
     description: 'Learn collaboratively and practice with peers in our engaging group classes.',
     image: groupclass,
     link: '/courses/Group',
